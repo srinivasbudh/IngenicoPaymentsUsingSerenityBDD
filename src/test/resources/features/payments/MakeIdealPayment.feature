@@ -6,6 +6,7 @@ Feature: Make Ideal Payment
   Background:
     Given User has A Valid Access Token for Hosted Checkout Service
 
+  @VerifySuccessFulPaymentUsingIdeal
   Scenario Outline: Verify user has successfully made a Payment using Ideal
     Given User has created a transaction using <currencyCode>,<amount>,<countryCode>,<variant>,<locale>
     And Partial redirect URL is found based On Input data
