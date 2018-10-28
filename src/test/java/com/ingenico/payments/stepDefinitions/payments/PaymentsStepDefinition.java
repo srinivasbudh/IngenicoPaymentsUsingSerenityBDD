@@ -1,30 +1,36 @@
 package com.ingenico.payments.stepDefinitions.payments;
 
+import com.ingenico.payments.pageMethods.APIMethods;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import net.serenitybdd.core.Serenity;
+import net.thucydides.core.annotations.Steps;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Created by Srinivas Budha on 10/28/2018.
  */
 public class PaymentsStepDefinition {
 
-    @Given("^User has A Valid Access Token for Hosted Checkout Service$")
-    public void user_has_A_Valid_Access_Token_for_Hosted_Checkout_Service() {
-        // Write code here that turns the phrase above into concrete actions
+    @Steps
+    APIMethods apiMethods;
 
+    @Given("^User has A Valid Access Token for Hosted Checkout Service$")
+    public void generateToken() {
+        apiMethods.setToken();
     }
 
-    @Given("^User has created a transaction using EUR,(\\d+),NL,test,en_GB$")
-    public void user_has_created_a_transaction_using_EUR_NL_test_en_GB(int arg1) {
-        // Write code here that turns the phrase above into concrete actions
-
+    @Given("^User has created a transaction using (.*),(.*),(.*),(.*),(.*)$")
+    public void createTransaction(String currencyCode,String amount,String countryCode,String variant,String locale) {
+        apiMethods.createTransaction(currencyCode, amount, countryCode, variant, locale);
     }
 
     @Given("^Partial redirect URL is found based On Input data$")
-    public void partial_redirect_URL_is_found_based_On_Input_data() {
-        // Write code here that turns the phrase above into concrete actions
-
+    public void partial_redirect_URL_is_found_based_On_Input_data() throws Throwable{
+        int statusCode=Serenity.sessionVariableCalled("status");
+        assertThat(statusCode).isEqualTo(201);
+        apiMethods.getPaymentURL();
     }
 
     @When("^he Attempts to make a payment using Ideal$")

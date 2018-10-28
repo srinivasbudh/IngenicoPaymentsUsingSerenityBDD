@@ -74,6 +74,12 @@
             <artifactId>assertj-core</artifactId>
             <version>${assertj.version}</version>
         </dependency>
+        <!-- Adding dependency for Json Validators  -->
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20090211</version>
+        </dependency>
     </dependencies>
 
     <!-- Below Build plug-in is to build the project and generate the test reports using serenity -->
