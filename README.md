@@ -1,6 +1,6 @@
 # Hosted Checkout API Automation using Serenity BDD
 
-In this Project I have automated Hoseted Checkout API using Serenity Rest assured and Web Automation is handled by Serenity BDD.
+In this Project I have automated Hosted Checkout API using Serenity Rest assured and Web Automation is handled by Serenity BDD.
  
  Serenity is an open source project available as maven dependency which has vast range of options provided for Test automation of web application 
  
@@ -31,15 +31,14 @@ In order to complete a payment transaction using Ingenico Connect, the following
 5. Select `iDeal` payment method and pay as an `Issuer`
 6. Complete the payment transaction
 
-#Task Deliverables
+# Task Deliverables
 
 1) Test Automation Frame work Performing all the 3 tasks using Serneity BDD (Open Source)
 2) All test cases Listed in BDD Format in the Gherkin(cucumber) file
 3) Detailed test reports With Screen shots and Rest API Requests and Response Can be viewed
 4) Test Framework Build using Maven
 5) Headless Browser execution support
-6) 
-7) Git source repository ready for Jenkins Build
+6) Git source repository ready for Jenkins Build
 
 # Test Approach
 
@@ -54,10 +53,6 @@ I have chosen BDD Test cases as these can be easily validated across  acceptance
 		WindowsOS:	mvn clean verify
 
 		MacOs : mvn clean verify -Dwebdriver.chrome.driver=DriverPathAsInput
-
-	To Run Specific Tags of a test (Specific group of tests):
-
-	  	mvn clean verify -Dcucumber.options="--tags @TAGNAME"
 
 # To View Test Results
 
