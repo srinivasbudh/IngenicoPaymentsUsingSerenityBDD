@@ -1,6 +1,7 @@
 package com.ingenico.payments.stepDefinitions.payments;
 
 import com.ingenico.payments.pageMethods.APIMethods;
+import com.ingenico.payments.pageMethods.PaymentPageMethods;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -16,6 +17,9 @@ public class PaymentsStepDefinition {
     @Steps
     APIMethods apiMethods;
 
+    @Steps
+    PaymentPageMethods paymentPageSteps;
+
     @Given("^User has A Valid Access Token for Hosted Checkout Service$")
     public void generateToken() {
         apiMethods.setToken();
@@ -27,21 +31,33 @@ public class PaymentsStepDefinition {
     }
 
     @Given("^Partial redirect URL is found based On Input data$")
-    public void partial_redirect_URL_is_found_based_On_Input_data() throws Throwable{
+    public void getPaymentURL(){
         int statusCode=Serenity.sessionVariableCalled("status");
         assertThat(statusCode).isEqualTo(201);
         apiMethods.getPaymentURL();
     }
 
-    @When("^he Attempts to make a payment using Ideal$")
-    public void he_Attempts_to_make_a_payment_using_Ideal() {
-        // Write code here that turns the phrase above into concrete actions
+    @When("^he launch payment page Based on URL from hosted Checkout response$")
+    public void viewPaymentOptions() {
+        paymentPageSteps.launchWebBrowser();
+        paymentPageSteps.checkPaymentPageLoaded();
+    }
 
+    @When("^pay using (.*) with bank of his choice$")
+    public void pay_using_bank_of_his_choice(String paymentMethod) {
+        paymentPageSteps.selectPaymentOption(paymentMethod);
+        paymentPageSteps.selectIssuer();
+        paymentPageSteps.confirmPayment();
     }
 
     @Then("^User Payment is successful$")
     public void user_Payment_is_successful() {
-        // Write code here that turns the phrase above into concrete actions
+        assertThat(paymentPageSteps.getPaymentStatusMessage()).isEqualToIgnoringCase("Your payment is successful.");
+    }
 
+    @Then("^Payment webPage has same (.*) and (.*)$")
+    public void verifyPaymentValues(String currencyCode, String amount) {
+        assertThat(paymentPageSteps.getTransactionValueFromPaymentPage()).containsIgnoringCase(currencyCode);
+        assertThat(paymentPageSteps.getTransactionValueFromPaymentPage()).containsIgnoringCase(amount);
     }
 }
