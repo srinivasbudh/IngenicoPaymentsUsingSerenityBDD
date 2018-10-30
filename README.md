@@ -46,13 +46,24 @@ To complete the Above task I have a listed positive and negative cases in BDD fo
 
 I have chosen BDD Test cases as these can be easily validated across  acceptance criteria
 
+# Observation (Might be a BUG)
+
+* *_The amount passed in API and amount on payment page are not same (it is 1% of the total value passed in API Request)_*
+	Example: If I pass 501 euro as input payment page created from Redirect_URL is displayed as 5.01 EUR 
+
+
 # Run Tests using Maven commands
 
-	Open a command window and run:
+	1) Clone Git Repository into Local
+	2) Navigate to command prompt of the cloned directory
+	3) Use below commands on command prompt
 
 		WindowsOS:	mvn clean verify
 
 		MacOs : mvn clean verify -Dwebdriver.chrome.driver=DriverPathAsInput
+		
+	Note: For Windows Browser ChromeDriver is already added to repository, For MacOS Driver path needs to be provided as Input.
+	
 
 # To View Test Results
 
